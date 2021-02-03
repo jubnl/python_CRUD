@@ -174,7 +174,7 @@ There are 3 different methods :
     - `limit` (optional)        : Integer that limit how many rows we want to query.
     - `offset` (optional)       : Integer that will set an offset to the query. limit parameter is required to set an offset.
 
-- `return_object` (opional) : If set to True, will return an object. Each attribute correspond to a row. Attribute's name is `instance.result_n` n corresponding to the index of the row. 
+- `return_object` (opional) : If set to True, will return an object. Each attribute correspond to a row. Attribute's name is `instance.row_n` n corresponding to the index (starting from 0) of the row. 
 
 ##### Return
 The function returns either a list of dictionaries that contains the query's result or an object if `return_object` is set to True or a pymysql.Error or a pymysql.Warning.
@@ -357,13 +357,13 @@ Type "help", "copyright", "credits" or "license" for more information.
 <class 'models.return_object.QueryAllReturnObject'>
 >>>
 >>> test.__dict__.keys()
-dict_keys(['result_0', 'result_1', 'result_2', 'result_3', 'result_4', 'result_5', 'result_6', 'result_7', 'result_8', 'result_9', 'result_10', 'result_11', 'result_12', 'result_13', 'result_14', 'result_15', 'result_16', 'result_17', 'result_18', 'result_19', 'result_20', 'result_21', 'result_22', 'result_23', 'result_24', 'result_25', 'result_26', 'result_27', 'result_28', 'result_29', 'result_30', 'result_31'])
+dict_keys(['row_0', 'row_1', 'row_2', 'row_3', 'row_4', 'row_5', 'row_6', 'row_7', 'row_8', 'row_9', 'row_10', 'row_11', 'row_12', 'row_13', 'row_14', 'row_15', 'row_16', 'row_17', 'row_18', 'row_19', 'row_20', 'row_21', 'row_22', 'row_23', 'row_24', 'row_25', 'row_26', 'row_27', 'row_28', 'row_29', 'row_30', 'row_31'])
 >>>
 >>>
->>> print(test.result_0)
+>>> print(test.row_0)
 {'id': 1, 'name': 'Can add log entry', 'content_type_id': 1, 'codename': 'add_logentry'}
 >>>
->>> print(test.result_0['name'])
+>>> print(test.row_0['name'])
 Can add log entry
 >>>
 ```
@@ -395,5 +395,11 @@ dict_keys(['id', 'name', 'content_type_id', 'codename'])
 >>>
 >>> test.codename
 'change_logentry'
+>>>
+>>>
+>>> test = model.count_rows(return_object=True)
+>>>
+>>> test.count
+32
 >>>
 ```
