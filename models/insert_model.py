@@ -2,6 +2,7 @@
 
 from utilities.utilities import conn_db
 import pymysql
+import datetime
 
 
 class InsertModel():
