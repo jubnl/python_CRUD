@@ -52,14 +52,14 @@ class SelectModel():
 
         if filter is not None:
             sql+=str(filter)
-
+        conn = conn_db()
         try:
-            conn = conn_db()
             cur = conn.cursor()
             cur.execute(sql)
             datas = cur.fetchall()
             cur.close()
         except (pymysql.Error, pymysql.Warning) as e:
+            conn.rollback()
             return e
         if return_object:
             return QueryAllReturnObject(datas)

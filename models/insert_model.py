@@ -43,14 +43,14 @@ class InsertModel():
                 sql+=f"{value}, "
 
         sql = sql[:-2]+")"
-
+        conn=conn_db()
         try:
-            conn=conn_db()
             cur=conn.cursor()
             cur.execute(sql)
             conn.commit()
             cur.close()
         except (pymysql.Error, pymysql.Warning) as e:
+            conn.rollback()
             return e
         return True
 

@@ -43,14 +43,14 @@ class UpdateModel():
 
         if filter is not None:
             sql+=f" {str(filter)}"
-
+        conn = conn_db()
         try:
-            conn = conn_db()
             cur = conn.cursor()
             cur.execute(sql)
             conn.commit()
             cur.close()
         except (pymysql.Error, pymysql.Warning) as e:
+            conn.rollback()
             return e
         else:
             return True
