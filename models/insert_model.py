@@ -51,7 +51,9 @@ class InsertModel():
             cur.close()
         except (pymysql.Error, pymysql.Warning) as e:
             conn.rollback()
+            conn.close()
             return e
+        conn.close()
         return True
 
 

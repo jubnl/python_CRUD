@@ -38,8 +38,10 @@ class DeleteModel():
             cur.close()
         except (pymysql.Error, pymysql.Warning) as e:
             conn.rollback()
+            conn.close()
             return e
         else:
+            conn.close()
             return True
 
 

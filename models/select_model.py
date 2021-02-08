@@ -60,10 +60,13 @@ class SelectModel():
             cur.close()
         except (pymysql.Error, pymysql.Warning) as e:
             conn.rollback()
+            conn.close()
             return e
         if return_object:
+            conn.close()
             return QueryAllReturnObject(datas)
         else:
+            conn.close()
             return datas
 
 
@@ -92,18 +95,21 @@ class SelectModel():
             sql+=f" * FROM `{self.table_name}`"
 
         sql+=f" {str(filter)}"
+        conn = conn_db()
         try:
-            conn = conn_db()
             cur = conn.cursor()
             cur.execute(sql)
             datas = cur.fetchone()
             cur.close()
         except (pymysql.Error, pymysql.Warning) as e:
+            conn.close()
             return e
         else:
             if return_object:
+                conn.close()
                 return QueryOneReturnObject(datas)
             else:
+                conn.close()
                 return datas
 
 
@@ -124,19 +130,23 @@ class SelectModel():
 
         if filter is not None:
             sql+=f" {str(filter)}"
+        conn=conn_db()
         try:
-            conn=conn_db()
             cur=conn.cursor()
             cur.execute(sql)
             count = cur.fetchone()
             cur.close()
         except (pymysql.Error, pymysql.Warning) as e:
+            conn.rollback()
+            conn.close()
             return e
         count['count'] = count['COUNT(*)']
         count.pop('COUNT(*)')
         if return_object:
+            conn.close()
             return QueryOneReturnObject(count)
         else:
+            conn.close()
             return int(count['count'])
 
 
