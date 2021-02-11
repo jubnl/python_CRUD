@@ -12,7 +12,7 @@ class UpdateModel():
         self.table_name = table_name
 
 
-    def update_rows(self, fields_values:dict, filter:str=None):
+    def update_rows(self, fields_values:dict, filter:str=None, return_sql_query:bool=False):
         """
         ### update_rows()
         #### parameters :
@@ -52,9 +52,13 @@ class UpdateModel():
         except (pymysql.Error, pymysql.Warning) as e:
             conn.rollback()
             conn.close()
+            if return_sql_query is True:
+                return sql, e
             return e
         else:
             conn.close()
+            if return_sql_query is True:
+                return sql, True
             return True
 
 

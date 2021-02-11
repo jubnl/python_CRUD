@@ -12,7 +12,7 @@ class SelectModel():
         self.table_name = table_name
 
 
-    def query_all_rows(self, distinct:bool=False, fields:list=None, filter:str=None, return_object:bool=False):
+    def query_all_rows(self, distinct:bool=False, fields:list=None, filter:str=None, return_object:bool=False, return_sql_query:bool=False):
         """
         ### query_all_rows()
         #### parameters :
@@ -61,16 +61,22 @@ class SelectModel():
         except (pymysql.Error, pymysql.Warning) as e:
             conn.rollback()
             conn.close()
+            if return_sql_query is True:
+                return sql, e
             return e
         if return_object:
             conn.close()
+            if return_sql_query is True:
+                return sql, QueryAllReturnObject(datas)
             return QueryAllReturnObject(datas)
         else:
             conn.close()
+            if return_sql_query is True:
+                return sql, datas
             return datas
 
 
-    def query_one_row(self, filter:str, fields:list=None, return_object:bool=False):
+    def query_one_row(self, filter:str, fields:list=None, return_object:bool=False, return_sql_query:bool=False):
         """
         ### query_one_row()
         #### parameters :
@@ -103,17 +109,23 @@ class SelectModel():
             cur.close()
         except (pymysql.Error, pymysql.Warning) as e:
             conn.close()
+            if return_sql_query is True:
+                return sql, e
             return e
         else:
             if return_object:
                 conn.close()
+                if return_sql_query is True:
+                    return sql, QueryOneReturnObject(datas)
                 return QueryOneReturnObject(datas)
             else:
                 conn.close()
+                if return_sql_query is True:
+                    return sql, datas
                 return datas
 
 
-    def count_rows(self, filter:str=None, return_object:bool=False):
+    def count_rows(self, filter:str=None, return_object:bool=False, return_sql_query:bool=False):
         """
         ### count_rows()
         #### parameters :
@@ -144,9 +156,13 @@ class SelectModel():
         count.pop('COUNT(*)')
         if return_object:
             conn.close()
+            if return_sql_query is True:
+                return sql, QueryOneReturnObject(count)
             return QueryOneReturnObject(count)
         else:
             conn.close()
+            if return_sql_query is True:
+                return sql, int(count['count'])
             return int(count['count'])
 
 

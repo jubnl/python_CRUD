@@ -12,7 +12,7 @@ class DeleteModel():
         self.table_name = table_name
 
 
-    def delete_row(self, filter:str=None):
+    def delete_row(self, filter:str=None, return_sql_query:bool=False):
         """
         ### delete_row(filter=None)
         #### Parameters :
@@ -39,9 +39,13 @@ class DeleteModel():
         except (pymysql.Error, pymysql.Warning) as e:
             conn.rollback()
             conn.close()
+            if return_sql_query is True:
+                return sql, e
             return e
         else:
             conn.close()
+            if return_sql_query is True:
+                return sql, True
             return True
 
 

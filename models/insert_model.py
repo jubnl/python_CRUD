@@ -12,7 +12,7 @@ class InsertModel():
         self.table_name = table_name
 
 
-    def insert_into_single_record(self, fields_values:dict):
+    def insert_into_single_record(self, fields_values:dict, return_sql_query:bool=False):
         """
         ### insert_into_single_record()
         #### parameters :
@@ -52,8 +52,12 @@ class InsertModel():
         except (pymysql.Error, pymysql.Warning) as e:
             conn.rollback()
             conn.close()
+            if return_sql_query is True:
+                return sql, e
             return e
         conn.close()
+        if return_sql_query is True:
+                return sql, True
         return True
 
 
