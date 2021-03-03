@@ -3,6 +3,7 @@
 from utilities.utilities import conn_db
 import pymysql
 import datetime
+from custom_exceptions.custom_exceptions import DatabaseException
 
 
 class UpdateModel():
