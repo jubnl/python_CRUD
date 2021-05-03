@@ -7,8 +7,9 @@ Your project should look like this :
 ```
 root_of_your_project
 │
-├───config
-│   └───db_config.json
+├───database
+│   ├───__init__.py
+│   └───manager.py
 ├───models
 │   ├───delete_model.py
 │   ├───filter.py
@@ -17,11 +18,11 @@ root_of_your_project
 │   ├───return_object.py
 │   ├───select_model.py
 │   └───update_model.py
-├───utilities
-│   └───utilities.py
+├───.env
+├───.gitignore
 ├───README.md
 ├───requirements.txt
-│   
+│
 └───your_main.py
 ```
 
@@ -29,17 +30,17 @@ root_of_your_project
 All libraries are in requirements.txt . Just open a terminal or a command prompt in root_of_your_project and type : `pip install -r requirements.txt`
 
 ### Configuration
-To connect the CRUD to a database you have to edit [config/db_config.json](config/db_config.json) .
+To connect the CRUD to a database you have to edit [.env.sample](.env.sample) and rename it `.env`.
 
-`db_host` : String, either an IP address or a FQDN.
+`DB_HOST` : String, either an IP address or a FQDN.
 
-`db_port` : Integer, that's the database's port
+`DB_PORT` : Integer, that's the database's port
 
-`db_user` : String, your username
+`DB_USER` : String, your username
 
-`db_password` : String, your password
+`DB_PASSWORD` : String, your password
 
-`db_name` : String, The database's name
+`DB_NAME` : String, The database's name
 
 ### Using the Model
 
