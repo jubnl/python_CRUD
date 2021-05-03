@@ -1,0 +1,14 @@
+# .env file
+.env
+
+# __pycache__ folders and files
+database/__pycache__/*
+models/__pycache__/*
+__pycache__/*
+
+# test files
+main.py
+sample.py
+
+# vscode files
+.vscode/*
